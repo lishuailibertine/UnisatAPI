@@ -1,15 +1,20 @@
 import { BridgeMessage } from "messagebridge-libertine/src/BridgeMessage"
-class MathWallet{
+import { EventEmitter } from "events";
+class MathWallet extends EventEmitter{
+    /**
+     * 初始化
+     */
     constructor(){
+        super();
+        this.setMaxListeners(100);
         this.messageBridge = new BridgeMessage("bitcoin");
-        this.eventHandlers = {};
     }
     /**
      * Address of current account.
      * @returns {Promise<[string]>} - addressed
      */
-    requestAccount(){
-        return this.messageBridge.sendMessage("requestAccount",null)
+    requestAccounts(){
+        return this.messageBridge.sendMessage("requestAccounts",null)
     }
     /**
      * Get address of current account
@@ -122,35 +127,20 @@ class MathWallet{
     pushPsbt(psbtHex){
         return this.messageBridge.sendMessage("pushPsbt",psbtHex)
     }
-    
-
-    dispatchEvent(eventName, data) {
-        const handlers = this.eventHandlers[eventName];
-        if (handlers) {
-          handlers.forEach(handler => handler(data));
-        }
-    }
-
-    on(eventName, handler) {
-        if (!this.eventHandlers[eventName]) {
-          this.eventHandlers[eventName] = [];
-        }
-        this.eventHandlers[eventName].push(handler);
-    }
-
-    removeListener(eventName, handler) {
-        const handlers = this.eventHandlers[eventName];
-        if (handlers) {
-          // Find the index of the handler in the handlers array
-          const index = handlers.indexOf(handler);
-          if (index !== -1) {
-            // Remove the handler from the array
-            handlers.splice(index, 1);
-          }
-        }
-    }
 }
-window.mathwallet = new MathWallet();
-window.dispatchEvent = function(eventName, data) {
-    window.mathwallet.dispatchEvent(eventName, data);
-}
+const provider = new MathWallet();
+// 防修改，但是没有设么用
+if (!window.unisat) {
+    window.unisat = new Proxy(provider, {
+      deleteProperty: () => true
+    });
+}  
+Object.defineProperty(window, 'unisat', {
+    value: new Proxy(provider, {
+       //不允许修改
+      deleteProperty: () => true
+    }),
+    //
+    writable: false
+});  
+window.dispatchEvent(new Event('unisat#initialized'));
