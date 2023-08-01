@@ -12,7 +12,7 @@ const stylesHandler = 'style-loader';
 
 
 const config = {
-    entry: './src/index.js',
+    entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
     },
@@ -45,6 +45,16 @@ const config = {
 
             // Add your rules for custom modules here
             // Learn more about loaders from https://webpack.js.org/loaders/
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules|\.d\.ts$/,
+                loader: 'ts-loader',
+                options: {
+                    compilerOptions: {
+                    noEmit: false, // this option will solve the issue
+                   },
+                  },
+              }
         ],
     },
 };

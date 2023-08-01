@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "outDir": "/typescript",
+      "outFile": "/typescript/index.js",
+      "lib": [
+        "dom",
+        "dom.iterable",
+        "esnext"
+      ],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noFallthroughCasesInSwitch": true,
+      "module": "AMD",
+      "moduleResolution": "node",
+      "isolatedModules": false,
+      "noEmit": true,
+      "jsx": "react-jsx",
+      "typeRoots": ["node_modules/@types"]
+    },
+    "exclude": [
+      "./node_modules"
+    ],
+    "include": [
+      "src"
+    ]
+  }
+  
