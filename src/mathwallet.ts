@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { BridgeMessage } from "messagebridge-libertine/dist/bridgeMessage"
+import {BridgeMessage} from "bridgemessage";
 
 export class MathWalletProvider extends EventEmitter {
   private messageBridge: BridgeMessage;

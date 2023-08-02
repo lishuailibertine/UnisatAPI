@@ -57,6 +57,10 @@ const config = {
               }
         ],
     },
+    optimization: {
+        //优化
+        minimize: true,
+    },
 };
 
 module.exports = () => {
