@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events';
-import { BridgeMessage } from 'bridgemessage';
-
-export default class MathWalletProvider extends EventEmitter {
+import { BridgeMessage } from 'slbridgemessage';
+export  class MathWalletProvider extends EventEmitter {
   private messageBridge: BridgeMessage;
   constructor() {
     super();
